@@ -15,7 +15,7 @@ allprojects {
 
 ```gradle
 dependencies {
-  implementation 'com.github.mehdikhalifeh:Shortcut:1'
+  implementation 'com.github.mehdikhalifeh:Shortcut:1.0.1'
 }
 ```
 
