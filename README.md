@@ -13,8 +13,11 @@ allprojects {
 ```
 ### Add dependency
 
-```
-implementation 'com.github.mehdikhalifeh:Shortcut:1'
+Gradle:
+```gradle
+dependencies {
+  implementation 'com.google.code.gson:gson:2.8.6'
+}
 ```
 
 ## Issues
