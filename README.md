@@ -23,27 +23,27 @@ dependencies {
 ### init `ShortcutUtils` class
 
 ```java
-shortcutUtils = new ShortcutUtils(context);
+ShortcutUtils shortcutUtils = new ShortcutUtils(context);
 ```
 
-### adding a `DynamicShortCut`
+### adding a `DynamicShortcut`
 
 ```java
 Shortcut dynamicShortcut = new Shortcut.ShortcutBuilder()
     .setShortcutIcon(R.drawable.icon)
-    .setShortcutId("dynamicshortcutId")
-    .setShortcutLongLabel("dynamicshortcutLongLable")
-    .setShortcutShortLabel("dynamicshortcutShortLabel")
-    .setIntentAction("dynamicshortcutIntentAction")
-    .setIntentStringExtraKey("dynamicshortcutKey")
-    .setIntentStringExtraValue("dynamicshortcutValue")
+    .setShortcutId("dynamicShortcutId")
+    .setShortcutLongLabel("dynamicShortcutLongLable")
+    .setShortcutShortLabel("dynamicShortcutShortLabel")
+    .setIntentAction("dynamicShortcutIntentAction")
+    .setIntentStringExtraKey("dynamicShortcutKey")
+    .setIntentStringExtraValue("dynamicShortcutValue")
     .build();
 shortcutUtils.addDynamicShortCut(dynamicHomeShortcut, new IReceiveStringExtra() {
      @Override
      public void onReceiveStringExtra(String stringExtraKey, String stringExtraValue) {
         String intent = getIntent().getStringExtra(stringExtraKey);
             if (intent != null) {
-                if (intent.equals("dynamicshortcutValue")) {
+                if (intent.equals("dynamicShortcutValue")) {
                     //write any code here
                 }
             }
@@ -53,17 +53,17 @@ shortcutUtils.addDynamicShortCut(dynamicHomeShortcut, new IReceiveStringExtra() 
 ```
 
 
-### disabling a `DynamicShortCut`
+### disabling a `DynamicShortcut`
 ```java
 shortcutUtils.disableDynamicShortCut(dynamicShortcut);
 ```
 
-### removing a `DynamicShortCut`
+### removing a `DynamicShortcut`
 ```java
 shortcutUtils.removeDynamicShortCut(dynamicShortcut);
 ```
 
-### enabling a `DynamicShortCut`
+### enabling a `DynamicShortcut`
 ```java
 shortcutUtils.enableDynamicShortCut(dynamicShortcut);
 ```
