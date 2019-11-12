@@ -16,8 +16,7 @@ allprojects {
 ### Add dependency
 
 ```
-// use the latest available version
-	        implementation 'com.github.mehdikhalifeh:Shortcut:1'
+	implementation 'com.github.mehdikhalifeh:Shortcut:1'
 ```
 
 ## Issues
