@@ -11,7 +11,22 @@ allprojects {
     }
 }
 ```
+
+##  `maven`
+
+```gradle
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+    </repositories>
+
+```
+
+
 ### Add dependency
+## gradle
 
 ```gradle
 dependencies {
@@ -19,6 +34,14 @@ dependencies {
 }
 ```
 
+## maven
+```gradle
+<dependency>
+	    <groupId>com.github.mehdikhalifeh</groupId>
+	    <artifactId>Shortcut</artifactId>
+	    <version>1.0.1</version>
+	</dependency>
+```
 ## Usage
 ### init `ShortcutUtils` class
 
