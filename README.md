@@ -19,6 +19,28 @@ dependencies {
 }
 ```
 
+## Usage
+### init `ShortcutUtils` class
+
+```java
+shortcutUtils = new ShortcutUtils(context);
+```
+
+### adding a `DynamicShortCut`
+
+```java
+Shortcut dynamicShortcut = new Shortcut.ShortcutBuilder()
+    .setShortcutIcon(R.drawable.icon)
+    .setShortcutId("dynamicshortcut")
+    .setShortcutLongLabel("dynamicshortcut")
+    .setShortcutShortLabel("dynamicshortcut")
+    .setIntentAction("dynamicshortcut")
+    .setIntentStringExtraKey("dynamicshorcutKey")
+    .setIntentStringExtraValue("dynamicshorcutValue")
+    .build();
+shortcutUtils.addDynamicShortCut(dynamicShortcut, this);
+```
+
 ## Issues
 
 Please send all issues and feedback to khalifeh.mehdi@gmail.com or Telegram ID: https://t.me/mehdikhalifeh
