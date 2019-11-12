@@ -6,9 +6,8 @@ A simple library to add pinned and dynamic shortcuts
 
 ```
 allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
+	repositories {
+		maven { url 'https://jitpack.io' }
 		}
 	}
 ```
@@ -16,7 +15,7 @@ allprojects {
 ### Add dependency
 
 ```
-	implementation 'com.github.mehdikhalifeh:Shortcut:1'
+implementation 'com.github.mehdikhalifeh:Shortcut:1'
 ```
 
 ## Issues
