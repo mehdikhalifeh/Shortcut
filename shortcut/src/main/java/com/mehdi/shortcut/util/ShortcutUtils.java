@@ -27,11 +27,10 @@ public class ShortcutUtils {
     private List<String> enabledPinnedShortCutIds;
     private Intent pinnedShortcutCallbackIntent;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public ShortcutUtils(Activity context) {
         this.context = context;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            shortcutManager = context.getSystemService(ShortcutManager.class);
-        }
+        shortcutManager = context.getSystemService(ShortcutManager.class);
         dynamicShortcutInfos = new ArrayList<>();
         disabledDynamicShortCutIds = new ArrayList<>();
         enabledDynamicShortCutIds = new ArrayList<>();
@@ -40,51 +39,48 @@ public class ShortcutUtils {
         enabledPinnedShortCutIds = new ArrayList<>();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     public void addDynamicShortCut(Shortcut shortcut, IReceiveStringExtra iReceiveStringExtra) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            Intent intent = new Intent(context.getApplicationContext(), context.getClass());
-            intent.putExtra(shortcut.getIntentStringExtraKey(), shortcut.getIntentStringExtraValue());
-            intent.setAction(shortcut.getIntentAction());
-            ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(context, shortcut.getShortcutId())
-                    .setShortLabel(shortcut.getShortcutShortLabel())
-                    .setLongLabel(shortcut.getShortcutLongLabel())
-                    .setIcon(Icon.createWithResource(context, shortcut.getShortcutIcon()))
-                    .setIntent(intent)
-                    .build();
-            iReceiveStringExtra.onReceiveStringExtra(shortcut.getIntentStringExtraKey(), shortcut.getIntentStringExtraValue());
-            dynamicShortcutInfos.add(shortcutInfo);
-            if (shortcutManager != null) {
-                shortcutManager.setDynamicShortcuts(dynamicShortcutInfos);
-            }
+        Intent intent = new Intent(context.getApplicationContext(), context.getClass());
+        intent.putExtra(shortcut.getIntentStringExtraKey(), shortcut.getIntentStringExtraValue());
+        intent.setAction(shortcut.getIntentAction());
+        ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(context, shortcut.getShortcutId())
+                .setShortLabel(shortcut.getShortcutShortLabel())
+                .setLongLabel(shortcut.getShortcutLongLabel())
+                .setIcon(Icon.createWithResource(context, shortcut.getShortcutIcon()))
+                .setIntent(intent)
+                .build();
+        iReceiveStringExtra.onReceiveStringExtra(shortcut.getIntentStringExtraKey(), shortcut.getIntentStringExtraValue());
+        dynamicShortcutInfos.add(shortcutInfo);
+        if (shortcutManager != null) {
+            shortcutManager.setDynamicShortcuts(dynamicShortcutInfos);
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void initPinnedShortCut(Shortcut shortcut, IReceiveStringExtra iReceiveStringExtra) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (shortcutManager.isRequestPinShortcutSupported()) {
-                returnIntent(shortcut);
-                iReceiveStringExtra.onReceiveStringExtra(shortcut.getIntentStringExtraKey(), shortcut.getIntentStringExtraValue());
-                try {
-                    pinnedShortcutCallbackIntent =
-                            shortcutManager.createShortcutResultIntent(returnShortcutInfo(shortcut));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        if (shortcutManager.isRequestPinShortcutSupported()) {
+            returnIntent(shortcut);
+            iReceiveStringExtra.onReceiveStringExtra(shortcut.getIntentStringExtraKey(), shortcut.getIntentStringExtraValue());
+            try {
+                pinnedShortcutCallbackIntent =
+                        shortcutManager.createShortcutResultIntent(returnShortcutInfo(shortcut));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void requestPinnedShortcut(Shortcut shortcut) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            returnIntent(shortcut);
-            returnShortcutInfo(shortcut);
-            PendingIntent successCallback = PendingIntent.getBroadcast(context, 0,
-                    pinnedShortcutCallbackIntent, 0);
-            if (shortcutManager != null) {
-                shortcutManager.requestPinShortcut(returnShortcutInfo(shortcut),
-                        successCallback.getIntentSender());
-            }
+        returnIntent(shortcut);
+        returnShortcutInfo(shortcut);
+        PendingIntent successCallback = PendingIntent.getBroadcast(context, 0,
+                pinnedShortcutCallbackIntent, 0);
+        if (shortcutManager != null) {
+            shortcutManager.requestPinShortcut(returnShortcutInfo(shortcut),
+                    successCallback.getIntentSender());
         }
     }
 
@@ -105,48 +101,43 @@ public class ShortcutUtils {
                 .build();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     public void disablePinnedShortCut(Shortcut shortcut) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (shortcutManager != null) {
-                removedPinnedShortCutIds.add(shortcut.getShortcutId());
-                shortcutManager.disableShortcuts(removedPinnedShortCutIds);
-            }
+        if (shortcutManager != null) {
+            removedPinnedShortCutIds.add(shortcut.getShortcutId());
+            shortcutManager.disableShortcuts(removedPinnedShortCutIds);
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     public void enablePinnedShortCut(Shortcut shortcut) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (shortcutManager != null) {
-                enabledPinnedShortCutIds.add(shortcut.getShortcutId());
-                shortcutManager.enableShortcuts(enabledPinnedShortCutIds);
-            }
+        if (shortcutManager != null) {
+            enabledPinnedShortCutIds.add(shortcut.getShortcutId());
+            shortcutManager.enableShortcuts(enabledPinnedShortCutIds);
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     public void removeDynamicShortCut(Shortcut shortcut) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            if (shortcutManager != null) {
-                removedDynamicShortCutIds.add(shortcut.getShortcutId());
-                shortcutManager.removeDynamicShortcuts(removedDynamicShortCutIds);
-            }
+        if (shortcutManager != null) {
+            removedDynamicShortCutIds.add(shortcut.getShortcutId());
+            shortcutManager.removeDynamicShortcuts(removedDynamicShortCutIds);
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     public void enableDynamicShortCut(Shortcut shortcut) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            if (shortcutManager != null) {
-                enabledDynamicShortCutIds.add(shortcut.getShortcutId());
-                shortcutManager.enableShortcuts(enabledDynamicShortCutIds);
-            }
+        if (shortcutManager != null) {
+            enabledDynamicShortCutIds.add(shortcut.getShortcutId());
+            shortcutManager.enableShortcuts(enabledDynamicShortCutIds);
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     public void disableDynamicShortCut(Shortcut shortcut) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            if (shortcutManager != null) {
-                disabledDynamicShortCutIds.add(shortcut.getShortcutId());
-                shortcutManager.disableShortcuts(disabledDynamicShortCutIds);
-            }
+        if (shortcutManager != null) {
+            disabledDynamicShortCutIds.add(shortcut.getShortcutId());
+            shortcutManager.disableShortcuts(disabledDynamicShortCutIds);
         }
     }
 }
