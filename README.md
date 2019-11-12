@@ -25,8 +25,8 @@ allprojects {
 ```
 
 
-### Add dependency
-## gradle
+## Add dependency
+### gradle
 
 ```gradle
 dependencies {
@@ -34,7 +34,7 @@ dependencies {
 }
 ```
 
-## maven
+### maven
 ```gradle
 <dependency>
 	    <groupId>com.github.mehdikhalifeh</groupId>
