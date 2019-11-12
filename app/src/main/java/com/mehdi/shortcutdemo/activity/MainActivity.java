@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.mehdi.shortcut.interfaces.IReceiveStringExtra;
 import com.mehdi.shortcut.model.Shortcut;
-import com.mehdi.shortcut.model.ShortcutUtils;
+import com.mehdi.shortcut.util.ShortcutUtils;
 import com.mehdi.shortcutdemo.R;
 
 public class MainActivity extends AppCompatActivity implements IReceiveStringExtra, View.OnClickListener {

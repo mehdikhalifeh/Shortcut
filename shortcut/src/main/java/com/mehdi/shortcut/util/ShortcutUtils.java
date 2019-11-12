@@ -1,4 +1,4 @@
-package com.mehdi.shortcut.model;
+package com.mehdi.shortcut.util;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -11,6 +11,7 @@ import android.support.annotation.RequiresApi;
 
 
 import com.mehdi.shortcut.interfaces.IReceiveStringExtra;
+import com.mehdi.shortcut.model.Shortcut;
 
 import java.util.ArrayList;
 import java.util.List;
