@@ -13,7 +13,6 @@ allprojects {
 ```
 ### Add dependency
 
-Gradle:
 ```gradle
 dependencies {
   implementation 'com.github.mehdikhalifeh:Shortcut:1'
