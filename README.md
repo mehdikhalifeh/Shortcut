@@ -52,6 +52,9 @@ shortcutUtils.addDynamicShortCut(dynamicHomeShortcut, new IReceiveStringExtra() 
 }
 ```
 
+
+<img src="git_dynamic_shortcut.gif"/>
+
 ## Issues
 
 Please send all issues and feedback to khalifeh.mehdi@gmail.com or Telegram ID: https://t.me/mehdikhalifeh
