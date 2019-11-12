@@ -53,17 +53,17 @@ shortcutUtils.addDynamicShortCut(dynamicHomeShortcut, new IReceiveStringExtra() 
 ```
 
 
-### disabling a `DynamicShortcut`
+### disabling a `DynamicShortcut` temporary
 ```java
 shortcutUtils.disableDynamicShortCut(dynamicShortcut);
 ```
 
-### removing a `DynamicShortcut`
+### removing a `DynamicShortcut` temporary
 ```java
 shortcutUtils.removeDynamicShortCut(dynamicShortcut);
 ```
 
-### enabling a `DynamicShortcut`
+### enabling a `DynamicShortcut` temporary
 ```java
 shortcutUtils.enableDynamicShortCut(dynamicShortcut);
 ```
