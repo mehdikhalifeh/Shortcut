@@ -16,7 +16,7 @@ allprojects {
 Gradle:
 ```gradle
 dependencies {
-  implementation 'com.google.code.gson:gson:2.8.6'
+  implementation 'com.github.mehdikhalifeh:Shortcut:1'
 }
 ```
 
