@@ -12,7 +12,7 @@ allprojects {
 }
 ```
 
-##  `maven`
+##  maven
 
 ```gradle
 <repositories>
@@ -20,7 +20,7 @@ allprojects {
         <id>jitpack.io</id>
         <url>https://jitpack.io</url>
     </repository>
-    </repositories>
+</repositories>
 
 ```
 
@@ -40,7 +40,7 @@ dependencies {
 	    <groupId>com.github.mehdikhalifeh</groupId>
 	    <artifactId>Shortcut</artifactId>
 	    <version>1.0.1</version>
-	</dependency>
+</dependency>
 ```
 ## Usage
 ### init `ShortcutUtils` class
