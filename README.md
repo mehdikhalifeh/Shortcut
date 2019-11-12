@@ -74,9 +74,46 @@ shortcutUtils.enableDynamicShortCut(dynamicShortcut);
 <img src="git_dynamic_shortcut.gif"/>
 
 
+### initing a `PinnedShortcut`
 
+```java
+Shortcut pinnedShortcut = new Shortcut.ShortcutBuilder()
+    .setShortcutIcon(R.drawable.icon)
+    .setShortcutId("pinnedShortcutId")
+    .setShortcutLongLabel("pinnedShortcutLongLabel")
+    .setShortcutShortLabel("pinnedShortcutShortLabel")
+    .setIntentAction("pinnedShortcutIntentAction")
+    .setIntentStringExtraKey("pinnedShortcutKey")
+    .setIntentStringExtraValue("pinnedShortcutValue")
+    .build();
+shortcutUtils.initPinnedShortCut(pinnedShortcut, new IReceiveStringExtra() {
+    @Override
+    public void onReceiveStringExtra(String stringExtraKey, String stringExtraValue) {
+        String intent = getIntent().getStringExtra(stringExtraKey);
+            if (intent != null) {
+                if (intent.equals("pinnedShortcutValue")) {
+                        //write any code here
+                }
+            }
+        }
+    });
+}
+```
 
+### requesting a `PinnedShortcut`
+```java
+shortcutUtils.requestPinnedShortcut(pinnedShortcut);
+```
 
+### disabling a `PinnedShortcut`
+```java
+shortcutUtils.disablePinnedShortCut(pinnedShortcut);
+```
+
+### enabling a `PinnedShortcut`
+```java
+shortcutUtils.enablePinnedShortCut(pinnedShortcut);
+```
 
 ## Issues
 
