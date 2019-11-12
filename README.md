@@ -1,5 +1,5 @@
 # Shortcut
-A simple library to add pinned and dynamic shortcuts
+A simple library to add dynamic and pinned shortcuts
 
 ## Integrating the shortcut sdk into your android app
 ### Add jitpack maven repo to app module's `build.gradle`
