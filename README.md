@@ -31,14 +31,25 @@ shortcutUtils = new ShortcutUtils(context);
 ```java
 Shortcut dynamicShortcut = new Shortcut.ShortcutBuilder()
     .setShortcutIcon(R.drawable.icon)
-    .setShortcutId("dynamicshortcut")
-    .setShortcutLongLabel("dynamicshortcut")
-    .setShortcutShortLabel("dynamicshortcut")
-    .setIntentAction("dynamicshortcut")
-    .setIntentStringExtraKey("dynamicshorcutKey")
-    .setIntentStringExtraValue("dynamicshorcutValue")
+    .setShortcutId("dynamicshortcutId")
+    .setShortcutLongLabel("dynamicshortcutLongLable")
+    .setShortcutShortLabel("dynamicshortcutShortLabel")
+    .setIntentAction("dynamicshortcutIntentAction")
+    .setIntentStringExtraKey("dynamicshortcutKey")
+    .setIntentStringExtraValue("dynamicshortcutValue")
     .build();
-shortcutUtils.addDynamicShortCut(dynamicShortcut, this);
+shortcutUtils.addDynamicShortCut(dynamicHomeShortcut, new IReceiveStringExtra() {
+     @Override
+     public void onReceiveStringExtra(String stringExtraKey, String stringExtraValue) {
+        String intent = getIntent().getStringExtra(stringExtraKey);
+            if (intent != null) {
+                if (intent.equals("dynamicshortcutValue")) {
+                    //write any code here
+                }
+            }
+        }
+    });
+}
 ```
 
 ## Issues
