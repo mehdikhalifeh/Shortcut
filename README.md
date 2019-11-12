@@ -115,6 +115,12 @@ shortcutUtils.disablePinnedShortCut(pinnedShortcut);
 shortcutUtils.enablePinnedShortCut(pinnedShortcut);
 ```
 
+
+
+<img src="git_pinned_shortcut.gif"/>
+
+
+
 ## Issues
 
 Please send all issues and feedback to khalifeh.mehdi@gmail.com or Telegram ID: https://t.me/mehdikhalifeh
