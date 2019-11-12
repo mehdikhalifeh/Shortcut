@@ -22,12 +22,12 @@ public class ShortcutUtils {
     private List<ShortcutInfo> dynamicShortcutInfos;
     private List<String> disabledDynamicShortCutIds;
     private List<String> enabledDynamicShortCutIds;
-    private ArrayList<String> removedDynamicShortCutIds;
+    private List<String> removedDynamicShortCutIds;
     private List<String> removedPinnedShortCutIds;
     private List<String> enabledPinnedShortCutIds;
     private Intent pinnedShortcutCallbackIntent;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     public ShortcutUtils(Activity context) {
         this.context = context;
         shortcutManager = context.getSystemService(ShortcutManager.class);
@@ -101,7 +101,7 @@ public class ShortcutUtils {
                 .build();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void disablePinnedShortCut(Shortcut shortcut) {
         if (shortcutManager != null) {
             removedPinnedShortCutIds.add(shortcut.getShortcutId());
@@ -109,7 +109,7 @@ public class ShortcutUtils {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void enablePinnedShortCut(Shortcut shortcut) {
         if (shortcutManager != null) {
             enabledPinnedShortCutIds.add(shortcut.getShortcutId());
