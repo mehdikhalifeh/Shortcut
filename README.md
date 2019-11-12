@@ -53,7 +53,30 @@ shortcutUtils.addDynamicShortCut(dynamicHomeShortcut, new IReceiveStringExtra() 
 ```
 
 
+### disabling a `DynamicShortCut`
+```java
+shortcutUtils.disableDynamicShortCut(dynamicShortcut);
+```
+
+### removing a `DynamicShortCut`
+```java
+shortcutUtils.removeDynamicShortCut(dynamicShortcut);
+```
+
+### enabling a `DynamicShortCut`
+```java
+shortcutUtils.enableDynamicShortCut(dynamicShortcut);
+```
+
+
+
+
 <img src="git_dynamic_shortcut.gif"/>
+
+
+
+
+
 
 ## Issues
 
