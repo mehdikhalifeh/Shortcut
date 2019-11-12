@@ -30,7 +30,7 @@ allprojects {
 
 ```gradle
 dependencies {
-  implementation 'com.github.mehdikhalifeh:Shortcut:1.0.1'
+  implementation 'com.github.mehdikhalifeh:Shortcut:1.0.2'
 }
 ```
 
@@ -39,7 +39,7 @@ dependencies {
 <dependency>
 	    <groupId>com.github.mehdikhalifeh</groupId>
 	    <artifactId>Shortcut</artifactId>
-	    <version>1.0.1</version>
+	    <version>1.0.2</version>
 </dependency>
 ```
 ## Usage
