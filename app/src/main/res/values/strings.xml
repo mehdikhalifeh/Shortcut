@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ShortcutDemo</string>
+    <string name="disabled_pinned_search_message">pinned seach shorcut disabled, you can enable it by clicking next button :)</string>
+    <string name="enabled_pinned_search_message">pinned search shortcut enabled</string>
+    <string name="removed_dynamic_home_message">dynamic home shorcut removed. you can see it by long clicking application icon. note that opening application will create this shortcut again. you can handle this methods by sharedpreferences  or ....</string>
+    <string name="disable_dynamic_home_message">dynamic home shorcut disabled. you can see it by long clicking application icon. note that opening application will create this shortcut again. you can handle this methods by sharedpreferences  or ....</string>
+    <string name="enable_dynamic_home_message">dynamic home shorcut enabled. you can see it by long clicking application icon. note that opening application will create this shortcut again. you can handle this methods by sharedpreferences  or ....</string>
+</resources>
