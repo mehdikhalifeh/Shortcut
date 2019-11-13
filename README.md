@@ -30,14 +30,14 @@ allprojects {
 
 ```gradle
 dependencies {
-  implementation 'com.github.mehdikhalifeh:Shortcut:1.0.2'
+  implementation 'com.github.MehdiKh93:Shortcut:1.0.2''
 }
 ```
 
 ### maven
 ```gradle
 <dependency>
-	    <groupId>com.github.mehdikhalifeh</groupId>
+	    <groupId>com.github.MehdiKh93</groupId>
 	    <artifactId>Shortcut</artifactId>
 	    <version>1.0.2</version>
 </dependency>
