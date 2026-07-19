@@ -1,0 +1,39 @@
+public abstract interface class com/mehdi/shortcut/interfaces/IReceiveStringExtra {
+	public abstract fun onReceiveStringExtra (Ljava/lang/String;Ljava/lang/String;)V
+}
+
+public final class com/mehdi/shortcut/model/Shortcut {
+	public fun <init> (Lcom/mehdi/shortcut/model/Shortcut$ShortcutBuilder;)V
+	public final fun getIntentAction ()Ljava/lang/String;
+	public final fun getIntentStringExtraKey ()Ljava/lang/String;
+	public final fun getIntentStringExtraValue ()Ljava/lang/String;
+	public final fun getShortcutIcon ()I
+	public final fun getShortcutId ()Ljava/lang/String;
+	public final fun getShortcutLongLabel ()Ljava/lang/String;
+	public final fun getShortcutShortLabel ()Ljava/lang/String;
+}
+
+public final class com/mehdi/shortcut/model/Shortcut$ShortcutBuilder {
+	public fun <init> ()V
+	public final fun build ()Lcom/mehdi/shortcut/model/Shortcut;
+	public final fun setIntentAction (Ljava/lang/String;)Lcom/mehdi/shortcut/model/Shortcut$ShortcutBuilder;
+	public final fun setIntentStringExtraKey (Ljava/lang/String;)Lcom/mehdi/shortcut/model/Shortcut$ShortcutBuilder;
+	public final fun setIntentStringExtraValue (Ljava/lang/String;)Lcom/mehdi/shortcut/model/Shortcut$ShortcutBuilder;
+	public final fun setShortcutIcon (I)Lcom/mehdi/shortcut/model/Shortcut$ShortcutBuilder;
+	public final fun setShortcutId (Ljava/lang/String;)Lcom/mehdi/shortcut/model/Shortcut$ShortcutBuilder;
+	public final fun setShortcutLongLabel (Ljava/lang/String;)Lcom/mehdi/shortcut/model/Shortcut$ShortcutBuilder;
+	public final fun setShortcutShortLabel (Ljava/lang/String;)Lcom/mehdi/shortcut/model/Shortcut$ShortcutBuilder;
+}
+
+public final class com/mehdi/shortcut/util/ShortcutUtils {
+	public fun <init> (Landroid/app/Activity;)V
+	public final fun addDynamicShortCut (Lcom/mehdi/shortcut/model/Shortcut;Lcom/mehdi/shortcut/interfaces/IReceiveStringExtra;)V
+	public final fun disableDynamicShortCut (Lcom/mehdi/shortcut/model/Shortcut;)V
+	public final fun disablePinnedShortCut (Lcom/mehdi/shortcut/model/Shortcut;)V
+	public final fun enableDynamicShortCut (Lcom/mehdi/shortcut/model/Shortcut;)V
+	public final fun enablePinnedShortCut (Lcom/mehdi/shortcut/model/Shortcut;)V
+	public final fun initPinnedShortCut (Lcom/mehdi/shortcut/model/Shortcut;Lcom/mehdi/shortcut/interfaces/IReceiveStringExtra;)V
+	public final fun removeDynamicShortCut (Lcom/mehdi/shortcut/model/Shortcut;)V
+	public final fun requestPinnedShortcut (Lcom/mehdi/shortcut/model/Shortcut;)V
+}
+
