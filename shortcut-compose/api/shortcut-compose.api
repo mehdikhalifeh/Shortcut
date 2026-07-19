@@ -1,0 +1,14 @@
+public final class com/mehdi/shortcut/compose/DynamicShortcutEffectKt {
+	public static final fun DynamicShortcutEffect (Ljava/lang/String;[Ljava/lang/Object;ZLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mehdi/shortcut/compose/PinShortcutRequester {
+	public static final field $stable I
+	public final fun isSupported ()Z
+	public final fun request (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Z
+}
+
+public final class com/mehdi/shortcut/compose/PinShortcutRequesterKt {
+	public static final fun rememberPinShortcutRequester (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mehdi/shortcut/compose/PinShortcutRequester;
+}
+
