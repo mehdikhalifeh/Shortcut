@@ -31,7 +31,8 @@ kotlin {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
+    // api: IconCompat and ShortcutManagerCompat semantics are part of the public surface.
+    api(libs.androidx.core.ktx)
 
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)
@@ -53,7 +54,7 @@ mavenPublishing {
     publishToMavenCentral()
     signAllPublications()
 
-    coordinates("io.github.mehdikhalifeh", "shortcut-core", "1.1.0")
+    coordinates("io.github.mehdikhalifeh", "shortcut-core", "2.0.0-alpha01")
 
     pom {
         name = "Shortcut"
