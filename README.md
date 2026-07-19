@@ -1,5 +1,13 @@
 # Shortcut
+
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.mehdikhalifeh/shortcut-core)](https://central.sonatype.com/artifact/io.github.mehdikhalifeh/shortcut-core)
+[![CI](https://github.com/mehdikhalifeh/Shortcut/actions/workflows/ci.yml/badge.svg)](https://github.com/mehdikhalifeh/Shortcut/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+
 A small Kotlin DSL for dynamic and pinned Android app shortcuts, built on `ShortcutManagerCompat`.
+
+**[API documentation](https://mehdikhalifeh.github.io/Shortcut/)** ·
+[Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md)
 
 ## Requirements
 
@@ -26,15 +34,29 @@ The library is published on **Maven Central** as `io.github.mehdikhalifeh:shortc
 
 ```kotlin
 dependencies {
-    implementation("io.github.mehdikhalifeh:shortcut-core:2.0.0-alpha01")
+    implementation("io.github.mehdikhalifeh:shortcut-core:2.0.0")
+
+    // Optional Jetpack Compose bindings:
+    implementation("io.github.mehdikhalifeh:shortcut-compose:2.0.0")
 }
 ```
 
-> **Migrating from 1.x?** The coordinates changed
-> (`com.github.MehdiKh93:Shortcut` → `io.github.mehdikhalifeh:shortcut-core`) **and 2.0 is a
-> breaking rewrite**: `ShortcutUtils`, `Shortcut.ShortcutBuilder` and `IReceiveStringExtra` are
-> replaced by the `shortcuts { }` DSL below. See "Reading extras" for the replacement of the
-> `IReceiveStringExtra` callback.
+## Migrating from 1.x
+
+2.0 is a breaking rewrite. Coordinates moved from JitPack to Maven Central, and the API is now a
+DSL:
+
+| 1.x | 2.0 |
+|---|---|
+| `com.github.MehdiKh93:Shortcut:1.0.2` (JitPack) | `io.github.mehdikhalifeh:shortcut-core:2.0.0` (Maven Central) |
+| `new ShortcutUtils(activity)` | `context.shortcuts { }` |
+| `Shortcut.ShortcutBuilder()...build()` + `addDynamicShortCut(s, cb)` | `dynamic("id") { shortLabel = …; intent { … } }` |
+| `initPinnedShortCut(...)` + `requestPinnedShortcut(...)` | `pinned("id") { …; resultCallback = … }` |
+| `remove/disable/enableDynamicShortCut(shortcut)` | `remove("id")` / `disable("id")` / `enable("id")` |
+| `disable/enablePinnedShortCut(shortcut)` | `disable("id", message = …)` / `enable("id")` |
+| single String extra (`setIntentStringExtraKey/Value`) | any extras via `intent { putExtra(…) }` |
+| `IReceiveStringExtra` callback | read `intent.getStringExtra(…)` in the target activity |
+| minSdk 15 | minSdk 23 |
 
 <details>
 <summary><b>Legacy 1.x (JitPack)</b></summary>
@@ -189,12 +211,6 @@ so validate values instead of assuming they match the current app version.
 
 A second artifact provides lifecycle-aware Compose bindings on top of `shortcut-core`
 (the core module itself stays Compose-free):
-
-```kotlin
-dependencies {
-    implementation("io.github.mehdikhalifeh:shortcut-compose:2.0.0-alpha01")
-}
-```
 
 `DynamicShortcutEffect` publishes a dynamic shortcut while it is in composition, re-publishes when
 its keys change, and (by default) removes it when it leaves composition:
