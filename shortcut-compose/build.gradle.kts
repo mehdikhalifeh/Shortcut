@@ -65,7 +65,7 @@ mavenPublishing {
     publishToMavenCentral()
     signAllPublications()
 
-    coordinates("io.github.mehdikhalifeh", "shortcut-compose", "2.0.0-alpha01")
+    coordinates("io.github.mehdikhalifeh", "shortcut-compose", "2.0.0")
 
     pom {
         name = "Shortcut Compose"

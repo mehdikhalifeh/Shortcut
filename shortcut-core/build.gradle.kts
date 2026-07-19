@@ -54,7 +54,7 @@ mavenPublishing {
     publishToMavenCentral()
     signAllPublications()
 
-    coordinates("io.github.mehdikhalifeh", "shortcut-core", "2.0.0-alpha01")
+    coordinates("io.github.mehdikhalifeh", "shortcut-core", "2.0.0")
 
     pom {
         name = "Shortcut"
