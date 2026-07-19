@@ -41,43 +41,6 @@ dependencies {
 }
 ```
 
-## Migrating from 1.x
-
-2.0 is a breaking rewrite. Coordinates moved from JitPack to Maven Central, and the API is now a
-DSL:
-
-| 1.x | 2.0 |
-|---|---|
-| `com.github.MehdiKh93:Shortcut:1.0.2` (JitPack) | `io.github.mehdikhalifeh:shortcut-core:2.0.0` (Maven Central) |
-| `new ShortcutUtils(activity)` | `context.shortcuts { }` |
-| `Shortcut.ShortcutBuilder()...build()` + `addDynamicShortCut(s, cb)` | `dynamic("id") { shortLabel = …; intent { … } }` |
-| `initPinnedShortCut(...)` + `requestPinnedShortcut(...)` | `pinned("id") { …; resultCallback = … }` |
-| `remove/disable/enableDynamicShortCut(shortcut)` | `remove("id")` / `disable("id")` / `enable("id")` |
-| `disable/enablePinnedShortCut(shortcut)` | `disable("id", message = …)` / `enable("id")` |
-| single String extra (`setIntentStringExtraKey/Value`) | any extras via `intent { putExtra(…) }` |
-| `IReceiveStringExtra` callback | read `intent.getStringExtra(…)` in the target activity |
-| minSdk 15 | minSdk 23 |
-
-<details>
-<summary><b>Legacy 1.x (JitPack)</b></summary>
-
-Versions up to `1.0.2` were distributed through JitPack and remain available for old
-projects:
-
-```gradle
-allprojects {
-    repositories {
-        maven { url "https://jitpack.io" }
-    }
-}
-
-dependencies {
-    implementation 'com.github.MehdiKh93:Shortcut:1.0.2'
-}
-```
-
-</details>
-
 ## Quick start
 
 Everything happens inside `context.shortcuts { }`:
@@ -101,6 +64,8 @@ context.shortcuts {
 `dynamic` publishes the shortcut, or updates it in place when the id already exists
 (`pushDynamicShortcut` under the hood, so the lowest-ranked shortcut is evicted automatically
 when the launcher limit is reached).
+
+<img src="git_dynamic_shortcut.gif"/>
 
 ### Intents
 
@@ -164,6 +129,8 @@ context.shortcuts {
 On API 26+ the system shows its pin-confirmation dialog and fires `resultCallback` when the user
 confirms; below API 26 the legacy launcher broadcast is used. Check `isPinShortcutSupported`
 up front if you want to hide the UI entirely.
+
+<img src="git_pinned_shortcut.gif"/>
 
 ### Managing shortcuts
 
@@ -277,10 +244,6 @@ matching a `<capability>` declared there; binding dynamic shortcuts to capabilit
 additionally requires Google's
 [Shortcuts Integration Library](https://developer.android.com/guide/topics/ui/shortcuts/creating-shortcuts#dynamic),
 which this library deliberately does not depend on.
-
-## Issues
-
-Please send all issues and feedback to khalifeh.mehdi@gmail.com or Telegram ID: https://t.me/mehdikhalifeh
 
 ## License
 ```
