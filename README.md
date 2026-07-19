@@ -19,8 +19,26 @@ and an Android SDK with platform 36:
 ./gradlew build
 ```
 
-## Integrating the shortcut sdk into your android app
-### Add jitpack maven repo to app module's `build.gradle`
+## Add the dependency
+
+The library is published on **Maven Central** as `io.github.mehdikhalifeh:shortcut-core`
+(no extra repository configuration needed):
+
+```kotlin
+dependencies {
+    implementation("io.github.mehdikhalifeh:shortcut-core:1.1.0")
+}
+```
+
+> **Migrating from 1.x?** Only the coordinates changed —
+> `com.github.MehdiKh93:Shortcut` → `io.github.mehdikhalifeh:shortcut-core`. The API is
+> source-compatible, so a coordinate swap is the whole migration.
+
+<details>
+<summary><b>Legacy 1.x (JitPack)</b></summary>
+
+Versions up to `1.0.2` were distributed through JitPack and remain available for old
+projects:
 
 ```gradle
 allprojects {
@@ -28,38 +46,13 @@ allprojects {
         maven { url "https://jitpack.io" }
     }
 }
-```
 
-##  maven
-
-```gradle
-<repositories>
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
-</repositories>
-
-```
-
-
-## Add dependency
-### gradle
-
-```gradle
 dependencies {
-  implementation 'com.github.MehdiKh93:Shortcut:1.0.2'
+    implementation 'com.github.MehdiKh93:Shortcut:1.0.2'
 }
 ```
 
-### maven
-```gradle
-<dependency>
-	<groupId>com.github.MehdiKh93</groupId>
-	<artifactId>Shortcut</artifactId>
-	<version>1.0.2</version>
-</dependency>
-```
+</details>
 ## Usage
 ### init `ShortcutUtils` class
 
