@@ -1,0 +1,22 @@
+[versions]
+agp = "9.3.0"
+androidxAppcompat = "1.7.1"
+androidxConstraintlayout = "2.2.1"
+androidxCoreKtx = "1.19.0"
+androidxTestCore = "1.7.0"
+junit = "4.13.2"
+ktlint = "14.2.0"
+robolectric = "4.16.1"
+
+[libraries]
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppcompat" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidxConstraintlayout" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCoreKtx" }
+androidx-test-core = { module = "androidx.test:core", version.ref = "androidxTestCore" }
+junit = { module = "junit:junit", version.ref = "junit" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
