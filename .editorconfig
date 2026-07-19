@@ -11,6 +11,8 @@ trim_trailing_whitespace = true
 [*.{kt,kts}]
 max_line_length = 120
 ktlint_code_style = ktlint_official
+# Composable functions are PascalCase by convention.
+ktlint_function_naming_ignore_when_annotated_with = Composable
 
 [*.{yml,yaml,json,toml}]
 indent_size = 2

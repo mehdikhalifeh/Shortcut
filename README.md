@@ -185,6 +185,47 @@ class ComposeActivity : AppCompatActivity() {
 Treat shortcut extras like any external input: they survive on the launcher across app updates,
 so validate values instead of assuming they match the current app version.
 
+## Jetpack Compose (`shortcut-compose`)
+
+A second artifact provides lifecycle-aware Compose bindings on top of `shortcut-core`
+(the core module itself stays Compose-free):
+
+```kotlin
+dependencies {
+    implementation("io.github.mehdikhalifeh:shortcut-compose:2.0.0-alpha01")
+}
+```
+
+`DynamicShortcutEffect` publishes a dynamic shortcut while it is in composition, re-publishes when
+its keys change, and (by default) removes it when it leaves composition:
+
+```kotlin
+@Composable
+fun ComposeScreen(draftCount: Int) {
+    DynamicShortcutEffect("compose_email", draftCount) {
+        shortLabel = "Compose ($draftCount drafts)"
+        icon = R.drawable.ic_compose
+        intent { target<ComposeActivity>() }
+    }
+}
+```
+
+Pass `removeOnDispose = false` for shortcuts that should outlive the screen.
+
+`rememberPinShortcutRequester` handles pin requests with result delivery scoped to composition:
+
+```kotlin
+val pinRequester = rememberPinShortcutRequester { pinnedId ->
+    // user confirmed the pin
+}
+Button(onClick = {
+    pinRequester.request("call_mom") {
+        shortLabel = "Call mom"
+        intent { target<CallActivity>() }
+    }
+}) { Text("Pin it") }
+```
+
 ### Static shortcuts and capabilities (`shortcuts.xml`)
 
 Static (manifest) shortcuts and App Actions capabilities are declared in XML, not through this
