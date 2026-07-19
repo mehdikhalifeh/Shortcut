@@ -16,4 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Shortcut"
 
-include(":app", ":shortcut")
+include(":app", ":shortcut-core", ":shortcut-compose")

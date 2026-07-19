@@ -1,0 +1,82 @@
+public final class com/mehdi/shortcut/IntentSpec {
+	public final fun addFlags (I)V
+	public final fun getAction ()Ljava/lang/String;
+	public final fun getData ()Landroid/net/Uri;
+	public final fun getFlags ()I
+	public final fun getType ()Ljava/lang/String;
+	public final fun putExtra (Ljava/lang/String;B)V
+	public final fun putExtra (Ljava/lang/String;C)V
+	public final fun putExtra (Ljava/lang/String;D)V
+	public final fun putExtra (Ljava/lang/String;F)V
+	public final fun putExtra (Ljava/lang/String;I)V
+	public final fun putExtra (Ljava/lang/String;J)V
+	public final fun putExtra (Ljava/lang/String;Landroid/os/Bundle;)V
+	public final fun putExtra (Ljava/lang/String;Landroid/os/Parcelable;)V
+	public final fun putExtra (Ljava/lang/String;Ljava/io/Serializable;)V
+	public final fun putExtra (Ljava/lang/String;Ljava/lang/CharSequence;)V
+	public final fun putExtra (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun putExtra (Ljava/lang/String;S)V
+	public final fun putExtra (Ljava/lang/String;Z)V
+	public final fun putExtra (Ljava/lang/String;[D)V
+	public final fun putExtra (Ljava/lang/String;[F)V
+	public final fun putExtra (Ljava/lang/String;[I)V
+	public final fun putExtra (Ljava/lang/String;[J)V
+	public final fun putExtra (Ljava/lang/String;[Ljava/lang/String;)V
+	public final fun putExtra (Ljava/lang/String;[Z)V
+	public final fun putExtras (Landroid/os/Bundle;)V
+	public final fun setAction (Ljava/lang/String;)V
+	public final fun setData (Landroid/net/Uri;)V
+	public final fun setFlags (I)V
+	public final fun setType (Ljava/lang/String;)V
+	public final fun target (Ljava/lang/Class;)V
+}
+
+public final class com/mehdi/shortcut/PinnedShortcutSpec : com/mehdi/shortcut/ShortcutSpec {
+	public final fun getResultCallback ()Landroid/app/PendingIntent;
+	public final fun setResultCallback (Landroid/app/PendingIntent;)V
+}
+
+public class com/mehdi/shortcut/ShortcutSpec {
+	public final fun adaptiveIcon (Landroid/graphics/Bitmap;)V
+	public final fun getCategories ()Ljava/util/Set;
+	public final fun getDisabledMessage ()Ljava/lang/CharSequence;
+	public final fun getIcon ()I
+	public final fun getId ()Ljava/lang/String;
+	public final fun getLongLabel ()Ljava/lang/CharSequence;
+	public final fun getRank ()I
+	public final fun getShortLabel ()Ljava/lang/CharSequence;
+	public final fun icon (Landroidx/core/graphics/drawable/IconCompat;)V
+	public final fun intent (Landroid/content/Intent;)V
+	public final fun intent (Lkotlin/jvm/functions/Function1;)V
+	public final fun isLongLived ()Z
+	public final fun setCategories (Ljava/util/Set;)V
+	public final fun setDisabledMessage (Ljava/lang/CharSequence;)V
+	public final fun setIcon (I)V
+	public final fun setLongLabel (Ljava/lang/CharSequence;)V
+	public final fun setLongLived (Z)V
+	public final fun setRank (I)V
+	public final fun setShortLabel (Ljava/lang/CharSequence;)V
+}
+
+public abstract interface annotation class com/mehdi/shortcut/ShortcutsDsl : java/lang/annotation/Annotation {
+}
+
+public final class com/mehdi/shortcut/ShortcutsKt {
+	public static final fun shortcuts (Landroid/content/Context;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class com/mehdi/shortcut/ShortcutsScope {
+	public final fun disable ([Ljava/lang/String;Ljava/lang/CharSequence;)V
+	public static synthetic fun disable$default (Lcom/mehdi/shortcut/ShortcutsScope;[Ljava/lang/String;Ljava/lang/CharSequence;ILjava/lang/Object;)V
+	public final fun dynamic (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun enable ([Ljava/lang/String;)V
+	public final fun getMaxShortcutCountPerActivity ()I
+	public final fun isPinShortcutSupported ()Z
+	public final fun isRateLimitingActive ()Z
+	public final fun pinned (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Z
+	public final fun remove ([Ljava/lang/String;)V
+	public final fun removeAll ()V
+	public final fun reportUsed (Ljava/lang/String;)V
+	public final fun update (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+

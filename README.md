@@ -1,5 +1,13 @@
 # Shortcut
-A simple library to add dynamic and pinned shortcuts
+
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.mehdikhalifeh/shortcut-core)](https://central.sonatype.com/artifact/io.github.mehdikhalifeh/shortcut-core)
+[![CI](https://github.com/mehdikhalifeh/Shortcut/actions/workflows/ci.yml/badge.svg)](https://github.com/mehdikhalifeh/Shortcut/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+
+A small Kotlin DSL for dynamic and pinned Android app shortcuts, built on `ShortcutManagerCompat`.
+
+**[API documentation](https://mehdikhalifeh.github.io/Shortcut/)** ·
+[Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md)
 
 ## Requirements
 
@@ -8,7 +16,7 @@ A simple library to add dynamic and pinned shortcuts
   `ShortcutManagerCompat`, so no `Build.VERSION` checks are needed in your code.
 - **AndroidX.** The library depends on `androidx.core`; apps still on the legacy support libraries must
   [migrate to AndroidX](https://developer.android.com/jetpack/androidx/migrate) first.
-- The public API is unchanged from 1.x — existing Java and Kotlin integrations compile as-is.
+- **Kotlin.** The 2.0 API is a Kotlin DSL designed for Kotlin callers.
 
 ## Building from source
 
@@ -19,8 +27,42 @@ and an Android SDK with platform 36:
 ./gradlew build
 ```
 
-## Integrating the shortcut sdk into your android app
-### Add jitpack maven repo to app module's `build.gradle`
+## Add the dependency
+
+The library is published on **Maven Central** as `io.github.mehdikhalifeh:shortcut-core`
+(no extra repository configuration needed):
+
+```kotlin
+dependencies {
+    implementation("io.github.mehdikhalifeh:shortcut-core:2.0.0")
+
+    // Optional Jetpack Compose bindings:
+    implementation("io.github.mehdikhalifeh:shortcut-compose:2.0.0")
+}
+```
+
+## Migrating from 1.x
+
+2.0 is a breaking rewrite. Coordinates moved from JitPack to Maven Central, and the API is now a
+DSL:
+
+| 1.x | 2.0 |
+|---|---|
+| `com.github.MehdiKh93:Shortcut:1.0.2` (JitPack) | `io.github.mehdikhalifeh:shortcut-core:2.0.0` (Maven Central) |
+| `new ShortcutUtils(activity)` | `context.shortcuts { }` |
+| `Shortcut.ShortcutBuilder()...build()` + `addDynamicShortCut(s, cb)` | `dynamic("id") { shortLabel = …; intent { … } }` |
+| `initPinnedShortCut(...)` + `requestPinnedShortcut(...)` | `pinned("id") { …; resultCallback = … }` |
+| `remove/disable/enableDynamicShortCut(shortcut)` | `remove("id")` / `disable("id")` / `enable("id")` |
+| `disable/enablePinnedShortCut(shortcut)` | `disable("id", message = …)` / `enable("id")` |
+| single String extra (`setIntentStringExtraKey/Value`) | any extras via `intent { putExtra(…) }` |
+| `IReceiveStringExtra` callback | read `intent.getStringExtra(…)` in the target activity |
+| minSdk 15 | minSdk 23 |
+
+<details>
+<summary><b>Legacy 1.x (JitPack)</b></summary>
+
+Versions up to `1.0.2` were distributed through JitPack and remain available for old
+projects:
 
 ```gradle
 allprojects {
@@ -28,139 +70,213 @@ allprojects {
         maven { url "https://jitpack.io" }
     }
 }
-```
 
-##  maven
-
-```gradle
-<repositories>
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
-</repositories>
-
-```
-
-
-## Add dependency
-### gradle
-
-```gradle
 dependencies {
-  implementation 'com.github.MehdiKh93:Shortcut:1.0.2'
+    implementation 'com.github.MehdiKh93:Shortcut:1.0.2'
 }
 ```
 
-### maven
-```gradle
-<dependency>
-	<groupId>com.github.MehdiKh93</groupId>
-	<artifactId>Shortcut</artifactId>
-	<version>1.0.2</version>
-</dependency>
-```
-## Usage
-### init `ShortcutUtils` class
+</details>
 
-```java
-ShortcutUtils shortcutUtils = new ShortcutUtils(context);
-```
+## Quick start
 
-### adding a `DynamicShortcut`
+Everything happens inside `context.shortcuts { }`:
 
-```java
-Shortcut dynamicShortcut = new Shortcut.ShortcutBuilder()
-    .setShortcutIcon(R.drawable.icon)
-    .setShortcutId("dynamicShortcutId")
-    .setShortcutLongLabel("dynamicShortcutLongLable")
-    .setShortcutShortLabel("dynamicShortcutShortLabel")
-    .setIntentAction("dynamicShortcutIntentAction")
-    .setIntentStringExtraKey("dynamicShortcutKey")
-    .setIntentStringExtraValue("dynamicShortcutValue")
-    .build();
-shortcutUtils.addDynamicShortCut(dynamicHomeShortcut, new IReceiveStringExtra() {
-     @Override
-     public void onReceiveStringExtra(String stringExtraKey, String stringExtraValue) {
-        String intent = getIntent().getStringExtra(stringExtraKey);
-            if (intent != null) {
-                if (intent.equals("dynamicShortcutValue")) {
-                    //write any code here
-                }
-            }
+```kotlin
+context.shortcuts {
+    dynamic("compose_email") {
+        shortLabel = "Compose"
+        longLabel = "Compose a new email"
+        icon = R.drawable.ic_compose
+        rank = 1
+        intent {
+            action = Intent.ACTION_VIEW
+            data = "myapp://compose".toUri()
+            putExtra("source", "shortcut")
         }
-    });
+    }
 }
 ```
 
+`dynamic` publishes the shortcut, or updates it in place when the id already exists
+(`pushDynamicShortcut` under the hood, so the lowest-ranked shortcut is evicted automatically
+when the launcher limit is reached).
 
-### disabling a `DynamicShortcut` temporary
-```java
-shortcutUtils.disableDynamicShortCut(dynamicShortcut);
+### Intents
+
+Each `intent { }` block supports the full `Intent` surface: `action` (defaults to
+`Intent.ACTION_VIEW` — the system requires shortcut intents to carry an action), `data`, `type`,
+`flags`/`addFlags`, extras of every `Bundle` type, and an explicit target activity —
+prefer `target<MyActivity>()` over implicit resolution so the shortcut cannot be intercepted:
+
+```kotlin
+intent {
+    target<ComposeActivity>()
+    putExtra("draftId", 42L)
+    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+}
 ```
 
-### removing a `DynamicShortcut` temporary
-```java
-shortcutUtils.removeDynamicShortCut(dynamicShortcut);
+Repeat `intent { }` to build a **back stack** — the last intent is launched, the earlier ones are
+what the back button walks through:
+
+```kotlin
+dynamic("deep_link") {
+    shortLabel = "Order #7"
+    intent { target<HomeActivity>() }
+    intent { target<OrdersActivity>() }
+    intent {
+        target<OrderDetailActivity>()
+        putExtra("orderId", 7)
+    }
+}
 ```
 
-### enabling a `DynamicShortcut` temporary
-```java
-shortcutUtils.enableDynamicShortCut(dynamicShortcut);
+### Icons
+
+```kotlin
+icon = R.drawable.ic_compose            // resource id
+icon(IconCompat.createWithBitmap(bmp))  // any IconCompat
+adaptiveIcon(fullBleedBitmap)           // adaptive bitmap
 ```
 
+### Pinned shortcuts
 
-
-
-<img src="git_dynamic_shortcut.gif"/>
-
-
-### initing a `PinnedShortcut`
-
-```java
-Shortcut pinnedShortcut = new Shortcut.ShortcutBuilder()
-    .setShortcutIcon(R.drawable.icon)
-    .setShortcutId("pinnedShortcutId")
-    .setShortcutLongLabel("pinnedShortcutLongLabel")
-    .setShortcutShortLabel("pinnedShortcutShortLabel")
-    .setIntentAction("pinnedShortcutIntentAction")
-    .setIntentStringExtraKey("pinnedShortcutKey")
-    .setIntentStringExtraValue("pinnedShortcutValue")
-    .build();
-shortcutUtils.initPinnedShortCut(pinnedShortcut, new IReceiveStringExtra() {
-    @Override
-    public void onReceiveStringExtra(String stringExtraKey, String stringExtraValue) {
-        String intent = getIntent().getStringExtra(stringExtraKey);
-            if (intent != null) {
-                if (intent.equals("pinnedShortcutValue")) {
-                        //write any code here
-                }
-            }
+```kotlin
+context.shortcuts {
+    val requested = pinned("call_mom") {
+        shortLabel = "Call mom"
+        icon = R.drawable.ic_phone
+        intent {
+            target<CallActivity>()
+            putExtra("contact", "mom")
         }
-    });
+        resultCallback = PendingIntent.getBroadcast(
+            context, 0,
+            Intent(ACTION_PINNED).setPackage(context.packageName),
+            PendingIntent.FLAG_IMMUTABLE,
+        )
+    }
+    if (!requested) { /* launcher doesn't support pinning */ }
 }
 ```
 
-### requesting a `PinnedShortcut`
-```java
-shortcutUtils.requestPinnedShortcut(pinnedShortcut);
+On API 26+ the system shows its pin-confirmation dialog and fires `resultCallback` when the user
+confirms; below API 26 the legacy launcher broadcast is used. Check `isPinShortcutSupported`
+up front if you want to hide the UI entirely.
+
+### Managing shortcuts
+
+```kotlin
+context.shortcuts {
+    update("compose_email") { /* new content, never publishes a new id */ }
+    remove("old_promo", "older_promo")
+    removeAll()
+    disable("compose_email", message = "Come back later")
+    enable("compose_email")
+    reportUsed("compose_email")   // feed the launcher's prediction ranking
+
+    val limit = maxShortcutCountPerActivity
+    val throttled = isRateLimitingActive
+}
 ```
 
-### disabling a `PinnedShortcut`
-```java
-shortcutUtils.disablePinnedShortCut(pinnedShortcut);
+### Reading extras in the target activity
+
+There is no callback interface in 2.0 — shortcut launches are plain intent deliveries. Read the
+extras where they arrive:
+
+```kotlin
+class ComposeActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        when (intent.getStringExtra("source")) {
+            "shortcut" -> shortcuts { reportUsed("compose_email") }
+        }
+    }
+
+    // If the activity uses launchMode="singleTop", also handle onNewIntent:
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        // re-read extras here
+    }
+}
 ```
 
-### enabling a `PinnedShortcut`
-```java
-shortcutUtils.enablePinnedShortCut(pinnedShortcut);
+Treat shortcut extras like any external input: they survive on the launcher across app updates,
+so validate values instead of assuming they match the current app version.
+
+## Jetpack Compose (`shortcut-compose`)
+
+A second artifact provides lifecycle-aware Compose bindings on top of `shortcut-core`
+(the core module itself stays Compose-free):
+
+`DynamicShortcutEffect` publishes a dynamic shortcut while it is in composition, re-publishes when
+its keys change, and (by default) removes it when it leaves composition:
+
+```kotlin
+@Composable
+fun ComposeScreen(draftCount: Int) {
+    DynamicShortcutEffect("compose_email", draftCount) {
+        shortLabel = "Compose ($draftCount drafts)"
+        icon = R.drawable.ic_compose
+        intent { target<ComposeActivity>() }
+    }
+}
 ```
 
+Pass `removeOnDispose = false` for shortcuts that should outlive the screen.
 
+`rememberPinShortcutRequester` handles pin requests with result delivery scoped to composition:
 
-<img src="git_pinned_shortcut.gif"/>
+```kotlin
+val pinRequester = rememberPinShortcutRequester { pinnedId ->
+    // user confirmed the pin
+}
+Button(onClick = {
+    pinRequester.request("call_mom") {
+        shortLabel = "Call mom"
+        intent { target<CallActivity>() }
+    }
+}) { Text("Pin it") }
+```
 
+### Static shortcuts and capabilities (`shortcuts.xml`)
 
+Static (manifest) shortcuts and App Actions capabilities are declared in XML, not through this
+library. Add `res/xml/shortcuts.xml` and reference it from your main activity:
+
+```xml
+<!-- AndroidManifest.xml -->
+<activity android:name=".MainActivity" android:exported="true">
+    <meta-data android:name="android.app.shortcuts"
+        android:resource="@xml/shortcuts" />
+</activity>
+```
+
+```xml
+<!-- res/xml/shortcuts.xml -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="compose_static"
+        android:enabled="true"
+        android:icon="@drawable/ic_compose"
+        android:shortcutShortLabel="@string/compose_short_label">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.example.app"
+            android:targetClass="com.example.app.ComposeActivity" />
+        <capability android:name="actions.intent.CREATE_MESSAGE" />
+    </shortcut>
+</shortcuts>
+```
+
+Dynamic shortcuts published with this library can participate in Google Assistant App Actions by
+matching a `<capability>` declared there; binding dynamic shortcuts to capabilities at runtime
+additionally requires Google's
+[Shortcuts Integration Library](https://developer.android.com/guide/topics/ui/shortcuts/creating-shortcuts#dynamic),
+which this library deliberately does not depend on.
 
 ## Issues
 
@@ -181,3 +297,4 @@ Please send all issues and feedback to khalifeh.mehdi@gmail.com or Telegram ID: 
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+```
