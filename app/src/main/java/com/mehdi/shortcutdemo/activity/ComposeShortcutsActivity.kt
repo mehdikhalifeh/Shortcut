@@ -44,7 +44,6 @@ import com.mehdi.shortcutdemo.R
 
 /** Demonstrates the shortcut-compose module on top of shortcut-core. */
 class ComposeShortcutsActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -75,14 +74,16 @@ private fun ComposeShortcutsScreen() {
         }
     }
 
-    val pinRequester = rememberPinShortcutRequester { pinnedId ->
-        Toast.makeText(context, "Pinned: $pinnedId", Toast.LENGTH_SHORT).show()
-    }
+    val pinRequester =
+        rememberPinShortcutRequester { pinnedId ->
+            Toast.makeText(context, "Pinned: $pinnedId", Toast.LENGTH_SHORT).show()
+        }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         Text("shortcut-compose demo", style = MaterialTheme.typography.titleLarge)
@@ -101,14 +102,15 @@ private fun ComposeShortcutsScreen() {
 
         Button(
             onClick = {
-                val requested = pinRequester.request("compose_pinned") {
-                    shortLabel = "Compose pin"
-                    icon = R.drawable.search
-                    intent {
-                        target<ComposeShortcutsActivity>()
-                        putExtra("source", "compose_pinned")
+                val requested =
+                    pinRequester.request("compose_pinned") {
+                        shortLabel = "Compose pin"
+                        icon = R.drawable.search
+                        intent {
+                            target<ComposeShortcutsActivity>()
+                            putExtra("source", "compose_pinned")
+                        }
                     }
-                }
                 if (!requested) {
                     Toast.makeText(context, "Pinning not supported", Toast.LENGTH_SHORT).show()
                 }
