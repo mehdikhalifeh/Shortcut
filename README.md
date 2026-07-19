@@ -1,6 +1,24 @@
 # Shortcut
 A simple library to add dynamic and pinned shortcuts
 
+## Requirements
+
+- **minSdk 23** (Android 6.0, required by current AndroidX). Dynamic shortcuts appear on API 25+, pinned shortcuts on API 26+ with a
+  legacy-launcher fallback below that — the library handles the version checks internally via
+  `ShortcutManagerCompat`, so no `Build.VERSION` checks are needed in your code.
+- **AndroidX.** The library depends on `androidx.core`; apps still on the legacy support libraries must
+  [migrate to AndroidX](https://developer.android.com/jetpack/androidx/migrate) first.
+- The public API is unchanged from 1.x — existing Java and Kotlin integrations compile as-is.
+
+## Building from source
+
+The project builds with the Gradle wrapper (Gradle 9.6, AGP 9.3, built-in Kotlin) and needs JDK 17+
+and an Android SDK with platform 36:
+
+```
+./gradlew build
+```
+
 ## Integrating the shortcut sdk into your android app
 ### Add jitpack maven repo to app module's `build.gradle`
 
