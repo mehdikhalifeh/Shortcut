@@ -24,7 +24,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":shortcut"))
+    implementation(project(":shortcut-core"))
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
