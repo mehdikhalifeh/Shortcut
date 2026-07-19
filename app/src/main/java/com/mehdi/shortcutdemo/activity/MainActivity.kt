@@ -151,6 +151,9 @@ class MainActivity : AppCompatActivity() {
             shortcuts { enable(ID_DYNAMIC_HOME) }
             showAlertDialog(getString(R.string.enable_dynamic_home_message))
         }
+        findViewById<Button>(R.id.btn_open_compose_demo).setOnClickListener {
+            startActivity(Intent(this, ComposeShortcutsActivity::class.java))
+        }
     }
 
     private fun showAlertDialog(message: String) {

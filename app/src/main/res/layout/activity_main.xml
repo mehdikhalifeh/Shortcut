@@ -33,11 +33,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="enable dynamic home shortcut"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_open_compose_demo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_disable_dynamic_home" />
+
+    <Button
+        android:id="@+id/btn_open_compose_demo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="open compose demo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_enable_dynamic_home" />
 
     <Button
         android:id="@+id/btn_disable_dynamic_home"
